@@ -3,12 +3,14 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private float speed = 8;
+    private float climbingSpeed = 4;
     private Rigidbody2D body;
     private Vector3 characterScale = new Vector3(5, 5, 5);
     private Animator anim;
     private bool grounded;
     private bool isCollidingWithLeftWall;
     private bool isCollidingWithRightWall;
+    private bool isClimbing;
 
     private void Awake()
     {
@@ -21,8 +23,20 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
 
-        // If there's no wall collision, allow horizontal movement
+        if (Input.GetKey(KeyCode.Space) && grounded)
+            Jump();
+
+        if (isClimbing)
+        {
+            grounded = true;
+            // Allow vertical movement when climbing
+            body.velocity = new Vector2(body.velocity.x, verticalInput * climbingSpeed);
+            // Disable horizontal movement while climbing
+            anim.SetBool("run", false);
+        }
+        
         if (!isCollidingWithRightWall && horizontalInput > 0.01f)
         {
             body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
@@ -40,9 +54,6 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = new Vector3(-characterScale.x, characterScale.y, characterScale.z);
         }
 
-        if (Input.GetKey(KeyCode.Space) && grounded)
-            Jump();
-
         // if horizontalInput is not 0 (stationary), trigger run animation
         anim.SetBool("run", horizontalInput != 0);
         
@@ -55,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        body.velocity = new Vector2(body.velocity.x, speed);
+        body.velocity = new Vector2(body.velocity.x, speed * 1.2f);
         anim.SetTrigger("jump");
         grounded = false;
     }
@@ -103,6 +114,23 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // When entering the ladder trigger area
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Ladder"))
+        {
+            // Enable climbing when player touches ladder
+            isClimbing = true;
+        }
+    }
 
-
+    // When exiting the ladder trigger area
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Ladder"))
+        {
+            // Disable climbing when player exits ladder
+            isClimbing = false;
+        }
+    }
 }
