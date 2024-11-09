@@ -7,7 +7,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 characterScale = new Vector3(5, 5, 5);
     private Animator anim;
     private bool grounded;
-    private bool isCollidingWithWall;
+    private bool isCollidingWithLeftWall;
+    private bool isCollidingWithRightWall;
 
     private void Awake()
     {
@@ -22,16 +23,22 @@ public class PlayerMovement : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
 
         // If there's no wall collision, allow horizontal movement
-        if (!isCollidingWithWall)
+        if (!isCollidingWithRightWall && horizontalInput > 0.01f)
         {
             body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
-        }
+            isCollidingWithLeftWall = false;
 
-        // sprite flipping based on directions
-        if (horizontalInput > 0.01f)                    // player is moving to the right
+            // flip the sprite to the right
             transform.localScale = characterScale;
-        else if (horizontalInput < -0.01f)              // player is moving to the left
+        }
+        else if (!isCollidingWithLeftWall && horizontalInput < -0.01f)
+        {
+            body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
+            isCollidingWithRightWall = false;
+
+            // flip the sprite to the right
             transform.localScale = new Vector3(-characterScale.x, characterScale.y, characterScale.z);
+        }
 
         if (Input.GetKey(KeyCode.Space) && grounded)
             Jump();
@@ -60,32 +67,42 @@ public class PlayerMovement : MonoBehaviour
         // Loop through each contact point in the collision
         foreach (ContactPoint2D contact in collision.contacts)
         {
-            // Check the normal of the collision to determine if it's below the player (ground)
             if (contact.normal.y > 0.5f) // Normal points upwards for ground collision
             {
                 if (collision.gameObject.CompareTag("Ground"))
                 {
-                    Debug.Log("Ground collision detected");
-
-                    grounded = true;  // The player is grounded, so allow jumping
+                    grounded = true;
                 }
             }
             else if (contact.normal.x != 0) // If the collision is along the X-axis, it's a wall collision
             {
                 if (collision.gameObject.CompareTag("Ground"))
                 {
-                    Debug.Log("Wall collision detected");
+                    if (contact.normal.x > 0) // Collision on the left side
+                    {
+                        isCollidingWithLeftWall = true;
+                        isCollidingWithRightWall = false;
+                        wallCollisionDetected = true;
 
-                    grounded = false;
-                    isCollidingWithWall = true;
-                    wallCollisionDetected = true;
+                    }
+                    else if (contact.normal.x < 0) // Collision on the right side
+                    {
+                        isCollidingWithRightWall = true;
+                        isCollidingWithLeftWall = false;
+                        wallCollisionDetected = true;
+
+                    }
                 }
             }
         }
 
         if (!wallCollisionDetected)
         {
-            isCollidingWithWall = false;
+            isCollidingWithRightWall = false;
+            isCollidingWithLeftWall = false;
         }
     }
+
+
+
 }
