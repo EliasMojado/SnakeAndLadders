@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private float speed = 5;
+    private float speed = 8;
     private Rigidbody2D body;
     private Vector3 characterScale = new Vector3(5, 5, 5);
     private Animator anim;
@@ -33,8 +33,13 @@ public class PlayerMovement : MonoBehaviour
 
         // if horizontalInput is not 0 (stationary), trigger run animation
         anim.SetBool("run", horizontalInput != 0);
-
+        
+        // if colliding with floor, set grounded
         anim.SetBool("grounded", grounded);
+
+        // Get and use the player's position
+        Vector3 playerPosition = transform.position;
+        Debug.Log("Player Position: " + playerPosition);
     }
 
     private void Jump()
@@ -45,7 +50,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
-    {
+    {   
+        // add another check if it is below
         if(collision.gameObject.tag == "Ground")
             grounded = true;
     }
