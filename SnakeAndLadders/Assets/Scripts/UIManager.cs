@@ -1,10 +1,6 @@
 using Riptide;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -51,7 +47,7 @@ public class UIManager : MonoBehaviour
 
     public void SendName()
     {
-        Message message = Message.Create(MessageSendMode.Reliable, (ushort)ClientToServerId.name);
+        Message message = Message.Create(MessageSendMode.Reliable, ClientToServerId.name);
         message.AddString(usernameField.text);
         NetworkManager.Singleton.Client.Send(message);
     }

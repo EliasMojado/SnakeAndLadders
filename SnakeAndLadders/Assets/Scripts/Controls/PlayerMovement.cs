@@ -1,9 +1,8 @@
+using Riptide;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private float speed = 8;
-    private float climbingSpeed = 4;
     private Rigidbody2D body;
     private Vector3 characterScale = new Vector3(5, 5, 5);
     private Animator anim;
@@ -11,7 +10,11 @@ public class PlayerMovement : MonoBehaviour
     private bool isCollidingWithLeftWall;
     private bool isCollidingWithRightWall;
     private bool isClimbing;
-
+    private bool[] inputs;
+    private void Start()
+    {
+        inputs = new bool[5];
+    }
     private void Awake()
     {
         // grab reference of rigid body
@@ -22,54 +25,57 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-
-        if (Input.GetKey(KeyCode.Space) && grounded)
-            Jump();
-
-        if (isClimbing)
+        if(Input.GetKey(KeyCode.W))
         {
-            grounded = true;
-            // Allow vertical movement when climbing
-            body.velocity = new Vector2(body.velocity.x, verticalInput * climbingSpeed);
-            // Disable horizontal movement while climbing
-            anim.SetBool("run", false);
-        }
-        
-        if (!isCollidingWithRightWall && horizontalInput > 0.01f)
-        {
-            body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
-            isCollidingWithLeftWall = false;
-
-            // flip the sprite to the right
-            transform.localScale = characterScale;
-        }
-        else if (!isCollidingWithLeftWall && horizontalInput < -0.01f)
-        {
-            body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
-            isCollidingWithRightWall = false;
-
-            // flip the sprite to the right
-            transform.localScale = new Vector3(-characterScale.x, characterScale.y, characterScale.z);
+            inputs[0] = true;
         }
 
-        // if horizontalInput is not 0 (stationary), trigger run animation
-        anim.SetBool("run", horizontalInput != 0);
-        
-        // if colliding with floor, set grounded
-        anim.SetBool("grounded", grounded);
+        if (Input.GetKey(KeyCode.A))
+        {
+            inputs[1] = true;
+        }
 
-        // Get and use the player's position
-        Vector3 playerPosition = transform.position;
+        if (Input.GetKey(KeyCode.S))
+        {
+            inputs[2] = true;
+        }
+
+        if (Input.GetKey(KeyCode.D))
+        {
+            inputs[3] = true;
+        }
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            inputs[4] = true;
+        }
     }
 
-    private void Jump()
+    private void FixedUpdate()
     {
-        body.velocity = new Vector2(body.velocity.x, speed * 1.2f);
-        anim.SetTrigger("jump");
-        grounded = false;
+        SendInput();
+        for(int i = 0; i < inputs.Length; i++)
+        {
+            inputs[i] = false;
+        }
     }
+
+    #region Messages
+
+    private void SendInput()
+    {
+        Message message = Message.Create(MessageSendMode.Unreliable, ClientToServerId.input);
+        message.AddBools(inputs, false);
+        NetworkManager.Singleton.Client.Send(message);
+    }
+
+    #endregion
+    //private void Jump()
+    //{
+    //    body.velocity = new Vector2(body.velocity.x, speed * 1.2f);
+    //    anim.SetTrigger("jump");
+    //    grounded = false;
+    //}
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

@@ -64,6 +64,7 @@
     <Compile Include="Assets\Script\Player.cs" />
     <Compile Include="Assets\Script\Multiplayer\NetworkManager.cs" />
     <Compile Include="Assets\Script\GameLogic.cs" />
+    <Compile Include="Assets\Script\PlayerMovement.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Script\Multiplayer\RiptideNetworking.dll" />
