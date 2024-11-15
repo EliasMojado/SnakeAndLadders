@@ -90,9 +90,6 @@ public class NetworkManager : MonoBehaviour
 
     private void PlayerLeft(object sender, ClientDisconnectedEventArgs e)
     {
-        Debug.Log("Player leftssssss");
-        Debug.Log(Player.list.Count);
-
         Destroy(Player.list[e.Id].gameObject);
     }
 }

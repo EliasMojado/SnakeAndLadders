@@ -18,18 +18,17 @@ public class Player : MonoBehaviour
 
     private void Move(Vector2 position)
     {
-        Debug.Log($"Player new position {position}");
         transform.position = new Vector3(position.x, position.y, 0);
     }
 
-    public static void Spawn(ushort id, string username, Vector2 position)
+    public static void Spawn(ushort id, string username, Vector3 position)
     {
         Player player;
-        Vector3 position3 = new Vector3(position.x, position.y, 0);
         if (id == NetworkManager.Singleton.Client.Id)
         {
-            player = Instantiate(GameLogic.Singleton.LocalPlayerPrefab, position3, Quaternion.identity).GetComponent<Player>();
+            player = Instantiate(GameLogic.Singleton.LocalPlayerPrefab, position, Quaternion.identity).GetComponent<Player>();
             player.isLocal = true;
+            Camera.main.GetComponent<CameraController>().player = player.transform;
         }
         else
         {
@@ -54,7 +53,7 @@ public class Player : MonoBehaviour
     [MessageHandler((ushort)ServerToClientId.playerMovement)]
     private static void PlayerMovement(Message message)
     {
-       if(list.TryGetValue(message.GetUShort(), out Player player))
+        if (list.TryGetValue(message.GetUShort(), out Player player))
         {
             player.Move(message.GetVector2());
         }

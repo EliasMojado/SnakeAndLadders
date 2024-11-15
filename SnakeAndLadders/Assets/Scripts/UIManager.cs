@@ -39,10 +39,19 @@ public class UIManager : MonoBehaviour
         NetworkManager.Singleton.Connect();
     }
 
+    public void DisconnectClicked() {
+        NetworkManager.Singleton.Client.Disconnect();
+    }
+
     public void BackToMain()
     {
         usernameField.interactable = true;
         connectPanel.SetActive(true);
+
+        foreach (Player player in Player.list.Values)
+        {
+            Destroy(player.gameObject);
+        }
     }
 
     public void SendName()

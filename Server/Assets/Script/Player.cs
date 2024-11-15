@@ -18,20 +18,21 @@ public class Player : MonoBehaviour
     }
     public static void Spawn(ushort id, string username)
     {
-
-        // Send the new player to all other players
-        foreach (Player otherPlayer in list.Values)
-        {
-            otherPlayer.SendSpawned(id);
-        }
-
-        Player player = Instantiate(GameLogic.Singleton.PlayerPrefab, new Vector2(0f, 1f), Quaternion.identity).GetComponent<Player>();
-        player.name = $"Player {id} ({(string.IsNullOrEmpty(username) ? "Guest" : username)}";
+        Player player = Instantiate(GameLogic.Singleton.PlayerPrefab, new Vector3(0f, 1f, 0f), Quaternion.identity).GetComponent<Player>();
+        player.name = $"Player {id} {(string.IsNullOrEmpty(username) ? "Guest" : username)}";
         player.id = id;
         player.username = username;
 
         player.SendSpawned(); // this only sends to already connected clients
+
         list.Add(id, player);
+
+        // Send the new player to all other players
+        foreach (Player otherPlayer in list.Values)
+        {
+            if(otherPlayer.id != id)
+                otherPlayer.SendSpawned(id);
+        }
     }
 
     #region Messages
@@ -66,7 +67,10 @@ public class Player : MonoBehaviour
     {
         if (list.TryGetValue(clientId, out Player player))
         {
-            player.Movement.SetInput(message.GetBools(5));
+            bool[] inputs = message.GetBools(5);
+            Vector2 position = message.GetVector2();
+            player.Movement.SetInput(inputs, position);
+            player.transform.position = position;
         }
     }
 

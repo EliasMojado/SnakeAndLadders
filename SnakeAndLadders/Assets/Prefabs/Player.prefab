@@ -12,10 +12,9 @@ GameObject:
   - component: {fileID: 8456014669833921138}
   - component: {fileID: 1771103528009110403}
   - component: {fileID: 6659203686374385013}
-  - component: {fileID: 4374792459713322510}
   - component: {fileID: 3661846923862052802}
-  - component: {fileID: 3569885989254464821}
-  m_Layer: 0
+  - component: {fileID: 1755355930084853077}
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,18 +160,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &4374792459713322510
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5073711473687060460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 237fad52b0ec9de47b16b22f04ad1cbf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &3661846923862052802
 Animator:
   serializedVersion: 5
@@ -194,7 +181,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3569885989254464821
+--- !u!114 &1755355930084853077
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
