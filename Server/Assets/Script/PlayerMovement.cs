@@ -6,6 +6,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Player player;
 
     private bool[] inputs;
+    private Vector2 position;
+    private int state;
 
     private void Start()
     {
@@ -13,9 +15,11 @@ public class PlayerMovement : MonoBehaviour
         inputs = new bool[5];
     }
 
-    public void SetInput(bool[] inputs, Vector2 position)
+    public void SetInput(bool[] inputs, Vector2 position, int state)
     {
         this.inputs = inputs;
+        this.state = state;
+        this.position = position;
         SendMovement(position);
     }
 
@@ -24,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
         Message message = Message.Create(MessageSendMode.Unreliable, ServerToClientId.playerMovement);
         message.AddUShort(player.id);
         message.AddVector2(position);
+        message.AddInt(state);
         NetworkManager.Singleton.Server.SendToAll(message);
     }
 

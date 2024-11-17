@@ -69,7 +69,13 @@ public class Player : MonoBehaviour
         {
             bool[] inputs = message.GetBools(5);
             Vector2 position = message.GetVector2();
-            player.Movement.SetInput(inputs, position);
+            int stateInt = message.GetInt();
+
+            // Convert the received integer to the PlayerState enum
+            Constants.PlayerState playerState = (Constants.PlayerState)stateInt;
+            Debug.Log($"Player {player.username} is in state: {playerState}");
+
+            player.Movement.SetInput(inputs, position, stateInt);
             player.transform.position = position;
         }
     }

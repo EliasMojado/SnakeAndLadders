@@ -13,10 +13,14 @@ public class PlayerMovement : MonoBehaviour
     private bool isCollidingWithRightWall;
     private bool isClimbing;
     private bool[] inputs;
+    private Constants.PlayerState currentState;
+
     private void Start()
     {
         inputs = new bool[5];
+        currentState = Constants.PlayerState.Idle;
     }
+
     private void Awake()
     {
         // grab reference of rigid body
@@ -30,16 +34,19 @@ public class PlayerMovement : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        if (Input.GetKey(KeyCode.Space) && grounded)
+        if (Input.GetKey(KeyCode.Space) && grounded){
             Jump();
-
-        if (isClimbing)
+            currentState = Constants.PlayerState.Jumping;
+        }else if (isClimbing)
         {
             grounded = true;
             // Allow vertical movement when climbing
             body.velocity = new Vector2(body.velocity.x, verticalInput * climbingSpeed);
             // Disable horizontal movement while climbing
             anim.SetBool("run", false);
+            currentState = Constants.PlayerState.Climbing;
+        }else if (grounded){
+            currentState = Constants.PlayerState.Idle;
         }
 
         if (!isCollidingWithRightWall && horizontalInput > 0.01f)
@@ -49,6 +56,9 @@ public class PlayerMovement : MonoBehaviour
 
             // flip the sprite to the right
             transform.localScale = characterScale;
+
+            if (currentState != Constants.PlayerState.Jumping)
+                currentState = Constants.PlayerState.Running;
         }
         else if (!isCollidingWithLeftWall && horizontalInput < -0.01f)
         {
@@ -57,6 +67,9 @@ public class PlayerMovement : MonoBehaviour
 
             // flip the sprite to the right
             transform.localScale = new Vector3(-characterScale.x, characterScale.y, characterScale.z);
+
+            if (currentState != Constants.PlayerState.Jumping)
+                currentState = Constants.PlayerState.Running;
         }
 
         // if horizontalInput is not 0 (stationary), trigger run animation
@@ -67,17 +80,17 @@ public class PlayerMovement : MonoBehaviour
 
         // Get and use the player's position
         Vector3 playerPosition = transform.position;
-
-        SendInput(new Vector2(playerPosition.x, playerPosition.y));
+        SendInput(new Vector2(playerPosition.x, playerPosition.y), currentState);
     }
 
     #region Messages
 
-    private void SendInput(Vector2 position)
+    private void SendInput(Vector2 position, Constants.PlayerState state)
     {
         Message message = Message.Create(MessageSendMode.Unreliable, ClientToServerId.input);
         message.AddBools(inputs, false);
         message.AddVector2(position);
+        message.AddInt((int)state); // Send player state as an integer
         NetworkManager.Singleton.Client.Send(message);
     }
 
@@ -119,7 +132,6 @@ public class PlayerMovement : MonoBehaviour
                         isCollidingWithRightWall = true;
                         isCollidingWithLeftWall = false;
                         wallCollisionDetected = true;
-
                     }
                 }
             }

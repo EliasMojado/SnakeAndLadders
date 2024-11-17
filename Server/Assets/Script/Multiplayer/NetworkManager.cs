@@ -50,8 +50,13 @@ public class NetworkManager : MonoBehaviour
         RiptideLogger.Initialize(Debug.Log, Debug.Log, Debug.LogWarning, Debug.LogError, false);
 
         Server = new Server();
-
+        
+        // localhost
         Server.Start(port, maxClientCount);
+
+        // lan
+        // Server.Start(port, maxClientCount, "192.168.196.140");
+
         Server.ClientDisconnected += PlayerLeft;
 
         Application.runInBackground = true;
