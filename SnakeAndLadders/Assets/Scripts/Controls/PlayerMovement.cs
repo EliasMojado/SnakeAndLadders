@@ -15,6 +15,14 @@ public class PlayerMovement : MonoBehaviour
     private bool[] inputs;
     private Constants.PlayerState currentState;
 
+    private AudioSource footstepAudioSource;
+    private AudioSource jumpAudioSource;
+    private AudioSource climbingAudioSource;
+
+    public AudioClip footstepClip;
+    public AudioClip jumpClip;
+    public AudioClip climbingClip;
+
     private void Start()
     {
         inputs = new bool[5];
@@ -27,6 +35,18 @@ public class PlayerMovement : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         // grab reference of animator
         anim = GetComponent<Animator>();
+
+        // set up audio sources
+        footstepAudioSource = gameObject.AddComponent<AudioSource>();
+        footstepAudioSource.clip = footstepClip;
+        footstepAudioSource.loop = true;
+
+        jumpAudioSource = gameObject.AddComponent<AudioSource>();
+        jumpAudioSource.clip = jumpClip;
+
+        climbingAudioSource = gameObject.AddComponent<AudioSource>();
+        climbingAudioSource.clip = climbingClip;
+        climbingAudioSource.loop = true;
     }
 
     private void Update()
@@ -37,15 +57,23 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && grounded){
             Jump();
             currentState = Constants.PlayerState.Jumping;
-        }else if (isClimbing)
-        {
+        } else if (isClimbing){
             grounded = true;
             // Allow vertical movement when climbing
             body.velocity = new Vector2(body.velocity.x, verticalInput * climbingSpeed);
             // Disable horizontal movement while climbing
             anim.SetBool("run", false);
             currentState = Constants.PlayerState.Climbing;
-        }else if (grounded){
+            if (isClimbing) {
+                if (!climbingAudioSource.isPlaying) {
+                    climbingAudioSource.Play();
+                }
+            } else {
+                if (climbingAudioSource.isPlaying) {
+                    climbingAudioSource.Stop();
+                }
+            }
+        } else if (grounded){
             currentState = Constants.PlayerState.Idle;
         }
 
@@ -70,6 +98,15 @@ public class PlayerMovement : MonoBehaviour
 
             if (currentState != Constants.PlayerState.Jumping)
                 currentState = Constants.PlayerState.Running;
+        }
+
+        // Play footstep audio when running
+        if (horizontalInput != 0 && grounded){
+            if (!footstepAudioSource.isPlaying){
+                footstepAudioSource.Play();
+            }
+        } else {
+            footstepAudioSource.Stop();
         }
 
         // if horizontalInput is not 0 (stationary), trigger run animation
@@ -100,6 +137,7 @@ public class PlayerMovement : MonoBehaviour
         body.velocity = new Vector2(body.velocity.x, speed * 1.2f);
         anim.SetTrigger("jump");
         grounded = false;
+        jumpAudioSource.Play();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
