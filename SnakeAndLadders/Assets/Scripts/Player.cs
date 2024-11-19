@@ -125,6 +125,12 @@ public class Player : MonoBehaviour
 
         if (list.TryGetValue(playerId, out Player player))
         {
+
+            if (player.isLocal)
+            {
+                return;
+            }
+            
             // Update the player's position
             player.Move(position);
 
