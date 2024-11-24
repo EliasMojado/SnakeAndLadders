@@ -33,6 +33,9 @@ public class Player : MonoBehaviour
             if(otherPlayer.id != id)
                 otherPlayer.SendSpawned(id);
         }
+
+        Snake.SendAllSnakesTo(id);
+        Debug.Log($"[Player.Spawn] New player with ID {id} and username '{username}' spawned and notified about existing entities.");
     }
 
     #region Messages

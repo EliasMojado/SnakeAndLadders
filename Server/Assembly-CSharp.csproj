@@ -69,6 +69,7 @@
     <Compile Include="Assets\Script\Multiplayer\NetworkManager.cs" />
     <Compile Include="Assets\Script\GameLogic.cs" />
     <Compile Include="Assets\Script\Constants\Constants.cs" />
+    <Compile Include="Assets\Script\Snake\Snake.cs" />
     <Compile Include="Assets\Script\PlayerMovement.cs" />
   </ItemGroup>
   <ItemGroup>
