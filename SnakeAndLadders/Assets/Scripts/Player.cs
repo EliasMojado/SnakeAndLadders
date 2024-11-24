@@ -1,4 +1,5 @@
 using Riptide;
+using Riptide.Transports;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,22 @@ public class Player : MonoBehaviour
     private Vector3 characterScale = new Vector3(5, 5, 5);
 
     public string username;
+
+    private Vector3 targetPosition;
+    private float interpolationSpeed = 30f;
+
+    private void Start()
+    {
+        targetPosition = transform.position;
+    }
+
+    private void Update()
+    {
+        if (!isLocal)
+        {
+            transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * interpolationSpeed);
+        }
+    }
 
     private Animator anim;
     private Rigidbody2D body;
@@ -31,7 +48,7 @@ public class Player : MonoBehaviour
 
     private void Move(Vector2 position)
     {
-        transform.position = new Vector3(position.x, position.y, 0);
+        targetPosition = new Vector3(position.x, position.y, 0);
     }
 
     public static void Spawn(ushort id, string username, Vector3 position)
@@ -48,7 +65,6 @@ public class Player : MonoBehaviour
             player = Instantiate(GameLogic.Singleton.PlayerPrefab, position, Quaternion.identity).GetComponent<Player>();
             player.isLocal = false;
         }
-
 
         player.name = $"Player {id} ({(string.IsNullOrEmpty(username) ? "Guest" : username)})";
         player.id = id;
