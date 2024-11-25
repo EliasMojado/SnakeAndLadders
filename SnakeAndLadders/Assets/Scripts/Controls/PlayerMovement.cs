@@ -1,4 +1,5 @@
 using Riptide;
+using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -18,15 +19,24 @@ public class PlayerMovement : MonoBehaviour
     private AudioSource footstepAudioSource;
     private AudioSource jumpAudioSource;
     private AudioSource climbingAudioSource;
+    private AudioSource bgMusicAudioSource;
 
     public AudioClip footstepClip;
     public AudioClip jumpClip;
     public AudioClip climbingClip;
+    public AudioClip bgMusicClip;
 
     private void Start()
     {
         inputs = new bool[5];
         currentState = Constants.PlayerState.Idle;
+
+        if (bgMusicClip != null && bgMusicAudioSource != null)
+        {
+            bgMusicAudioSource.clip = bgMusicClip;
+            bgMusicAudioSource.loop = true;
+            bgMusicAudioSource.Play();
+        }
     }
 
     private void Awake()
