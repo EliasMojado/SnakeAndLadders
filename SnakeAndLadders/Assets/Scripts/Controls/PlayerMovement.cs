@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D body;
-    private Vector3 characterScale = new Vector3(5, 5, 5);
+    private Vector3 characterScale = new Vector3(2.3f, 2.3f, 2.3f);
     private Animator anim;
     private float speed = 8;
     private float climbingSpeed = 4;

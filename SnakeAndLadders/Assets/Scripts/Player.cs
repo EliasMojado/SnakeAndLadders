@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     public ushort id { get; private set; }
     public bool isLocal { get; private set; }
 
-    private Vector3 characterScale = new Vector3(5, 5, 5);
+    private Vector3 characterScale = new Vector3(2.3f, 2.3f, 2.3f);
 
     public string username;
 
@@ -125,6 +125,9 @@ public class Player : MonoBehaviour
 
         if (list.TryGetValue(playerId, out Player player))
         {
+            if(player.isLocal){
+                return;
+            }
             // Update the player's position
             player.Move(position);
 
