@@ -51,7 +51,7 @@ public class GameLogic : MonoBehaviour
 
         Debug.Log("[GameLogic] Server is ready. Spawning snakes...");
         ushort newSnakeId = 1;
-        Vector3 spawnPosition = new Vector3(5f, 0f, 5f);
+        Vector3 spawnPosition = new Vector3(5f,5f, 5f);
         Snake.Spawn(newSnakeId, spawnPosition);
     }
 }

@@ -183,6 +183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 1652329000578282363, guid: c6f0b562bc91d184694477a2dfd76680, type: 3}
+  snakePrefab: {fileID: 1652329000578282363, guid: 14d75d571cd5c5c43ae4c05d46872928, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
