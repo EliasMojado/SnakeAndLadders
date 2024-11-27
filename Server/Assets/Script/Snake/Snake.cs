@@ -4,22 +4,24 @@ using System.Collections.Generic;
 
 public class Snake : MonoBehaviour
 {
+    // Static dictionary to track all snake instances
     public static Dictionary<ushort, Snake> list = new Dictionary<ushort, Snake>();
 
+    // Unique identifier for each snake
     public ushort id;
-    public Vector3 position;
 
+    // Handle removal of the snake from the dictionary when destroyed
     private void OnDestroy()
     {
         list.Remove(id);
     }
 
+    // Spawns a new snake at the given position
     public static void Spawn(ushort id, Vector3 spawnPosition)
     {
-        // Log the intent to spawn a snake
         Debug.Log($"[Snake.Spawn] Attempting to spawn a snake with ID: {id} at position: {spawnPosition}");
 
-        // Instantiate the snake object and assign properties
+        // Instantiate the snake object and assign its properties
         Snake snake = Instantiate(GameLogic.Singleton.SnakePrefab, spawnPosition, Quaternion.identity).GetComponent<Snake>();
         if (snake == null)
         {
@@ -27,9 +29,8 @@ public class Snake : MonoBehaviour
             return;
         }
 
-        // Assign properties to the snake instance
+        // Assign the unique ID to the snake
         snake.id = id;
-        snake.position = spawnPosition;
         Debug.Log($"[Snake.Spawn] Successfully instantiated snake with ID: {id}");
 
         // Add the snake to the dictionary
@@ -45,7 +46,8 @@ public class Snake : MonoBehaviour
         snake.SendSpawned();
         Debug.Log($"[Snake.Spawn] Spawn notification sent for Snake ID: {id}");
     }
-    
+
+    // Sends spawn data to all players
     private void SendSpawned()
     {
         if (NetworkManager.Singleton == null)
@@ -64,6 +66,7 @@ public class Snake : MonoBehaviour
         NetworkManager.Singleton.Server.SendToAll(AddSpawnData(Message.Create(MessageSendMode.Reliable, ServerToClientId.snakeSpawned)));
     }
 
+    // Sends all snakes to a specific client
     public static void SendAllSnakesTo(ushort clientId)
     {
         foreach (Snake snake in list.Values)
@@ -75,32 +78,34 @@ public class Snake : MonoBehaviour
         Debug.Log($"[Snake] Sent all {list.Count} snakes to client {clientId}");
     }
 
-
+    // Adds spawn data to a message
     private Message AddSpawnData(Message message)
     {
         message.AddUShort(id);
-        message.AddVector3(position);
+        message.AddVector3(transform.position); // Use transform.position for position
         return message;
     }
 
+    // Updates the snake's position
     public void UpdatePosition(Vector3 newPosition)
     {
-        position = newPosition;
-        transform.position = newPosition;
+        transform.position = newPosition; // Update the position directly
 
         // Notify all clients about the updated position
         SendUpdatedPosition();
     }
 
+    // Sends position update to all clients
     private void SendUpdatedPosition()
     {
         NetworkManager.Singleton.Server.SendToAll(AddUpdateData(Message.Create(MessageSendMode.Unreliable, ServerToClientId.snakeUpdated)));
     }
 
+    // Adds updated position data to a message
     private Message AddUpdateData(Message message)
     {
         message.AddUShort(id);
-        message.AddVector3(position);
+        message.AddVector3(transform.position); // Use transform.position for position
         return message;
     }
 }

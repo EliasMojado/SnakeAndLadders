@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
 
             // Convert the received integer to the PlayerState enum
             Constants.PlayerState playerState = (Constants.PlayerState)stateInt;
-            Debug.Log($"Player {player.username} is in state: {playerState}");
+            // Debug.Log($"Player {player.username} is in state: {playerState}");
 
             player.Movement.SetInput(inputs, position, stateInt);
             player.transform.position = position;

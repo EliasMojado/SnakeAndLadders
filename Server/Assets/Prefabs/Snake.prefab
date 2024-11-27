@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -6866572537200430686}
   - component: {fileID: 5657795240802252908}
   - component: {fileID: -634851774482713780}
+  - component: {fileID: -2677099388362713221}
   m_Layer: 0
   m_Name: Snake
   m_TagString: Untagged
@@ -48,7 +49,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  position: {x: 0, y: 0, z: 0}
 --- !u!212 &-6866572537200430686
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -172,4 +172,18 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
+--- !u!114 &-2677099388362713221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652329000578282363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 538e5a3728e57e944bdd1e9561e8fb54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followDistance: 10
+  speed: 2
