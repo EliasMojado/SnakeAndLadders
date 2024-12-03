@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -2677099388362713221}
   m_Layer: 0
   m_Name: Snake
-  m_TagString: Untagged
+  m_TagString: Snake
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -160,7 +160,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -187,3 +187,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followDistance: 10
   speed: 2
+  jumpForce: 5
+  groundCheckDistance: 0.5
