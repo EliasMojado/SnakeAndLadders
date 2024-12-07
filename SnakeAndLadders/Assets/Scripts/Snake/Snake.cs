@@ -50,7 +50,7 @@ public class Snake : MonoBehaviour
 
     public void UpdatePosition(Vector3 newPosition)
     {
-        Debug.Log($"Updating snake position: ID = {id}, New Position = {newPosition}");
+        // Debug.Log($"Updating snake position: ID = {id}, New Position = {newPosition}");
         position = newPosition;
         transform.position = newPosition;
     }
@@ -62,7 +62,7 @@ public class Snake : MonoBehaviour
         ushort snakeId = message.GetUShort();  // Get the snake ID
         Vector3 spawnPosition = message.GetVector3();  // Get the spawn position for the snake
 
-        Debug.Log($"SnakeSpawned message received: ID = {snakeId}, Spawn Position = {spawnPosition}");
+        // Debug.Log($"SnakeSpawned message received: ID = {snakeId}, Spawn Position = {spawnPosition}");
         Spawn(snakeId, spawnPosition);
     }
 
@@ -73,7 +73,7 @@ public class Snake : MonoBehaviour
         ushort snakeId = message.GetUShort();  // Get the snake ID
         Vector3 newPosition = message.GetVector3();  // Get the updated position for the snake
 
-        Debug.Log($"SnakeUpdated message received: ID = {snakeId}, New Position = {newPosition}");
+        // Debug.Log($"SnakeUpdated message received: ID = {snakeId}, New Position = {newPosition}");
 
         // Update the snake's position on the client
         if (list.TryGetValue(snakeId, out Snake snake))

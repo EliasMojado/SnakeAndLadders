@@ -1,15 +1,19 @@
 using Riptide;
 // using Unity.VisualScripting.Dependencies.Sqlite;
+
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D body;
     private Vector3 characterScale = new Vector3(5, 5, 5);
+    private Vector3 respawnPoint;
     private Animator anim;
     private float speed = 8;
     private float climbingSpeed = 4;
     private bool grounded;
+    private bool isFalling = false;
     private bool isCollidingWithLeftWall;
     private bool isCollidingWithRightWall;
     private bool isClimbing;
@@ -192,6 +196,46 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void StartFall()
+    {
+        if (isFalling) return; // Prevent starting another fall if already falling
+
+        isFalling = true;
+        StartCoroutine(GradualFall());
+    }
+
+    private IEnumerator GradualFall()
+    {
+        float fallSpeed = 0.01f; // How fast the player falls
+        float targetY = -0; // Final Y position where the player "falls"
+        
+        while (transform.position.y > 0)
+        {
+            // Gradually move the player down
+            transform.position = new Vector3(transform.position.x, transform.position.y - fallSpeed, transform.position.z);
+            
+            // Optional: You can play a falling animation here
+            // anim.SetTrigger("fall");
+
+            yield return null; // Wait for the next frame
+        }
+
+        // Once the player reaches the target Y position, respawn them
+        Respawn();
+    }
+
+    private void Respawn()
+    {
+        // After falling, respawn the player at the respawn point
+        transform.position = respawnPoint;
+
+        // Reset the player state, collider, and velocity if necessary
+        grounded = true;  // Assume the player is grounded when respawned
+        body.velocity = Vector2.zero;  // Stop any ongoing velocity
+
+        isFalling = false; // Reset the falling state
+    }
+
     // When entering the ladder trigger area
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -199,6 +243,16 @@ public class PlayerMovement : MonoBehaviour
         {
             // Enable climbing when player touches ladder
             isClimbing = true;
+        }else if (other.CompareTag("Snake")){
+            Debug.Log("Snake Collision!");
+            // make the player fall from the world
+            Respawn();
+        }else if (other.CompareTag("Void")){
+            Debug.Log("You fell into the void!");
+            Respawn();
+        }else if (other.CompareTag("Respawn")){
+            Debug.Log("Respawn Point Set!");
+            respawnPoint = other.transform.position;
         }
     }
 

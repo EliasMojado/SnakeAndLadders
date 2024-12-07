@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SnakeMovement : MonoBehaviour
 {
-    public float followDistance = 10f; // Distance within which the snake follows the player
+    public float followDistance = 5f; // Distance within which the snake follows the player
     public float speed = 2f;           // Movement speed of the snake
     public float jumpForce = 10f;       // Force applied for jumping
     public float groundCheckDistance = 0.5f; // Distance to check if the snake is grounded
