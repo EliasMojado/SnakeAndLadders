@@ -30,6 +30,12 @@ public class SnakeBody : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        body.positionCount = 0;
+        segmentPositions = null;
+        segmentVelocities = null;
+    }
     // Update is called once per frame
     void Update()
     {

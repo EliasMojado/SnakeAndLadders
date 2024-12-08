@@ -52,6 +52,11 @@ public class UIManager : MonoBehaviour
         {
             Destroy(player.gameObject);
         }
+
+        foreach (Snake snake in Snake.list.Values)
+        {
+            Destroy(snake.gameObject);
+        }
     }
 
     public void SendName()
