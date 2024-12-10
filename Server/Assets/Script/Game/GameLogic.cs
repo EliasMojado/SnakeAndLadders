@@ -56,7 +56,7 @@ public class GameLogic : MonoBehaviour
         Snake.Spawn(newSnakeId, spawnPosition);
         newSnakeId++;
 
-        spawnPosition = new Vector3(13f, 5f, 5f);
+        spawnPosition = new Vector3(7f, 10f, 5f);
         Snake.Spawn(newSnakeId, spawnPosition);
         newSnakeId++;
 

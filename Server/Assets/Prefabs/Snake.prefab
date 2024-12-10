@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 538e5a3728e57e944bdd1e9561e8fb54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followDistance: 10
+  followDistance: 3
   speed: 2
   jumpForce: 5
   groundCheckDistance: 0.5

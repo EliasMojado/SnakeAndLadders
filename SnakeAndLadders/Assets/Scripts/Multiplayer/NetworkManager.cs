@@ -70,9 +70,9 @@ public class NetworkManager : MonoBehaviour
         Client.Disconnect();
     }
 
-    public void Connect()
+    public void Connect(string ipAddress, ushort port)
     {
-        Client.Connect($"{ip}:{port}");
+        Client.Connect($"{ipAddress}:{port}");
     }
 
     public void DidConnect(object sender, EventArgs e)

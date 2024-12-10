@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class SnakeMovement : MonoBehaviour
 {
-    public float followDistance = 5f; // Distance within which the snake follows the player
-    public float speed = 2f;           // Movement speed of the snake
+    private float followDistance = 5f; // Distance within which the snake follows the player
+    public float speed = 5f;           // Movement speed of the snake
     public float jumpForce = 10f;       // Force applied for jumping
     public float groundCheckDistance = 0.5f; // Distance to check if the snake is grounded
 
@@ -39,17 +39,19 @@ public class SnakeMovement : MonoBehaviour
         // Check for a target player and follow them
         if (targetPlayer != null)
         {
-            float distance = Vector3.Distance(transform.position, targetPlayer.position);
+            float distance = Vector2.Distance(transform.position, targetPlayer.position);
             Debug.Log($"[SnakeMovement] Targeting player at position: {targetPlayer.position}, Distance: {distance}");
 
-            if (distance <= followDistance)
-            {
+            if (distance < followDistance)
+            {   
+                // If the player is within range, follow them
+                Debug.Log("[SnakeMovement] Player within range. Distance: " + distance + " Follow Distance: " + followDistance);
                 FollowPlayer();
             }
             else
             {
                 // If the player moves out of range, stop following
-                Debug.Log("[SnakeMovement] Player out of range. Stopping follow.");
+                Debug.Log("[SnakeMovement] Player out of range. Distance: " + distance);
                 targetPlayer = null;
             }
         }
@@ -91,7 +93,7 @@ public class SnakeMovement : MonoBehaviour
         {
             // Get the player's position from the PlayerMovement component
             Vector3 playerPosition = player.Movement.transform.position;
-            float distance = Vector3.Distance(transform.position, playerPosition);
+            float distance = Vector2.Distance(transform.position, playerPosition);
 
             // Debug.Log($"[SnakeMovement] Checking player {player.id} at position {player.Movement.transform.position}, Snake position: {transform.position}");
             // Debug.Log($"[SnakeMovement] Distance to player: {distance}");
@@ -114,23 +116,6 @@ public class SnakeMovement : MonoBehaviour
             Debug.Log("[SnakeMovement] No player within follow distance.");
         }
     }
-
-    // private void FollowPlayer()
-    // {
-    //     // Move towards the player's position (horizontal movement)
-    //     Vector2 direction = (targetPlayer.position - transform.position).normalized;
-    //     direction.y = 0; // Ignore vertical movement for horizontal following
-    //     rb.velocity = new Vector2(direction.x * speed, rb.velocity.y);
-
-    //     // Trigger jump if player is above the snake and horizontally aligned
-    //     if (Mathf.Abs(targetPlayer.position.x - transform.position.x) < 1f && targetPlayer.position.y > transform.position.y + 0.5f)
-    //     {
-    //         Debug.Log($"[SnakeMovement] Jump triggered! Player position: {targetPlayer.position}, Snake position: {transform.position}");
-    //         Jump();
-    //     }
-
-    //     snakeComponent.UpdatePosition(transform.position);
-    // }
 
     private void FollowPlayer()
     {

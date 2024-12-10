@@ -26,17 +26,34 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject connectPanel;
     [SerializeField] private TMP_InputField usernameField;
 
+    [SerializeField] private TMP_InputField addressField;
+
+    [SerializeField] private TMP_InputField portField;
+
     private void Awake()
     { 
         Singleton = this;
     }
 
-   public void ConnectClicked()
+    public void ConnectClicked()
     {
+        string ipAddress = addressField.text;
+        if (!IsValidIPAddress(ipAddress))
+        {
+            Debug.LogError("Invalid IP address.");
+            return;
+        }
+
+        if (!ushort.TryParse(portField.text, out ushort port))
+        {
+            Debug.LogError("Invalid port number.");
+            return;
+        }
+
         usernameField.interactable = false;
         connectPanel.SetActive(false);
 
-        NetworkManager.Singleton.Connect();
+        NetworkManager.Singleton.Connect(ipAddress, port);
     }
 
     public void DisconnectClicked() {
@@ -66,4 +83,14 @@ public class UIManager : MonoBehaviour
         NetworkManager.Singleton.Client.Send(message);
     }
 
+    private bool IsValidIPAddress(string ipAddress)
+    {
+        // Regular expression to validate IPv4 addresses
+        string pattern = @"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\." +
+                        @"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\." +
+                        @"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\." +
+                        @"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
+
+        return System.Text.RegularExpressions.Regex.IsMatch(ipAddress, pattern);
+    }
 }
