@@ -7,6 +7,8 @@ public enum ServerToClientId : ushort
 {
     playerSpawned = 1,
     playerMovement,
+    snakeSpawned,
+    snakeUpdated 
 }
 
 public enum ClientToServerId : ushort
@@ -68,9 +70,9 @@ public class NetworkManager : MonoBehaviour
         Client.Disconnect();
     }
 
-    public void Connect()
+    public void Connect(string ipAddress, ushort port)
     {
-        Client.Connect($"{ip}:{port}");
+        Client.Connect($"{ipAddress}:{port}");
     }
 
     public void DidConnect(object sender, EventArgs e)
