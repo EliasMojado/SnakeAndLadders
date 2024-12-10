@@ -8,7 +8,7 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D body;
-    private Vector3 characterScale = new Vector3(5, 5, 5);
+    private Vector3 characterScale = new Vector3(2, 2, 2);
     private Vector3 respawnPoint;
     private Animator anim;
     private float speed = 8;
