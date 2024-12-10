@@ -161,6 +161,27 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+<<<<<<< HEAD
+=======
+--- !u!114 &4374792459713322510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5073711473687060460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 237fad52b0ec9de47b16b22f04ad1cbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footstepClip: {fileID: 8300000, guid: 953bbab4fc6d74abeb66d6ce987abd3a, type: 3}
+  jumpClip: {fileID: 8300000, guid: b042cdb1d82d3458e948042a0fc1de30, type: 3}
+  climbingClip: {fileID: 8300000, guid: ecd852916701c4520b83e6df1bf766f7, type: 3}
+  bgMusicClipLevel1: {fileID: 8300000, guid: 826e852ea950741e69379b7199b1935b, type: 3}
+  bgMusicClipLevel3: {fileID: 8300000, guid: 99861f6f37fe74c77af0271112000962, type: 3}
+  bgMusicClipLevel5: {fileID: 8300000, guid: 8875a7a51597a48c39960c4e4260bb69, type: 3}
+>>>>>>> main
 --- !u!95 &3661846923862052802
 Animator:
   serializedVersion: 5
@@ -207,3 +228,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 237fad52b0ec9de47b16b22f04ad1cbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  footstepClip: {fileID: 8300000, guid: 953bbab4fc6d74abeb66d6ce987abd3a, type: 3}
+  jumpClip: {fileID: 8300000, guid: b042cdb1d82d3458e948042a0fc1de30, type: 3}
+  climbingClip: {fileID: 8300000, guid: ecd852916701c4520b83e6df1bf766f7, type: 3}
+  bgMusicClipLevel1: {fileID: 8300000, guid: 826e852ea950741e69379b7199b1935b, type: 3}
+  bgMusicClipLevel3: {fileID: 8300000, guid: 99861f6f37fe74c77af0271112000962, type: 3}
+  bgMusicClipLevel5: {fileID: 8300000, guid: 8875a7a51597a48c39960c4e4260bb69, type: 3}

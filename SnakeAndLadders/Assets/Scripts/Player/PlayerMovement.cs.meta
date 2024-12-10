@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 237fad52b0ec9de47b16b22f04ad1cbf
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - footstepClip: {fileID: 8300000, guid: 953bbab4fc6d74abeb66d6ce987abd3a, type: 3}
+  - jumpClip: {fileID: 8300000, guid: b042cdb1d82d3458e948042a0fc1de30, type: 3}
+  - climbingClip: {fileID: 8300000, guid: ecd852916701c4520b83e6df1bf766f7, type: 3}
+  - bgMusicClip: {fileID: 8300000, guid: 8acd04f981f90487fa8d9d345923d660, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

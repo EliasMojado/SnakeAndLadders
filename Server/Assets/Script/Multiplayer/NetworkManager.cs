@@ -6,6 +6,8 @@ public enum ServerToClientId : ushort
 {
     playerSpawned = 1,
     playerMovement,
+    snakeSpawned,
+    snakeUpdated,
 }
 
 public enum ClientToServerId : ushort
@@ -60,6 +62,8 @@ public class NetworkManager : MonoBehaviour
         Server.ClientDisconnected += PlayerLeft;
 
         Application.runInBackground = true;
+        
+        Debug.Log("[NetworkManager] Server initialized and started.");
     }
 
     private void FixedUpdate()
