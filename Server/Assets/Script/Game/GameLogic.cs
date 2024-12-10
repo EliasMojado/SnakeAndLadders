@@ -60,6 +60,24 @@ public class GameLogic : MonoBehaviour
         Snake.Spawn(newSnakeId, spawnPosition);
         newSnakeId++;
 
-        
+        spawnPosition = new Vector3(5f, 20f, 5f);
+        Snake.Spawn(newSnakeId, spawnPosition);
+        newSnakeId++;
+
+        spawnPosition = new Vector3(17f, 32f, 5f);
+        Snake.Spawn(newSnakeId, spawnPosition);
+        newSnakeId++;   
+
+        spawnPosition = new Vector3(7f, 37f, 5f);
+        Snake.Spawn(newSnakeId, spawnPosition);
+        newSnakeId++;       
+
+        spawnPosition = new Vector3(3f, 45f, 5f);
+        Snake.Spawn(newSnakeId, spawnPosition);
+        newSnakeId++;  
+
+        spawnPosition = new Vector3(17f, 45f, 5f);
+        Snake.Spawn(newSnakeId, spawnPosition);
+        newSnakeId++; 
     }
 }
