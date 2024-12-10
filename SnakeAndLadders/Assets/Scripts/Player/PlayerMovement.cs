@@ -8,12 +8,8 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D body;
-<<<<<<< HEAD:SnakeAndLadders/Assets/Scripts/Controls/PlayerMovement.cs
-    private Vector3 characterScale = new Vector3(2.3f, 2.3f, 2.3f);
-=======
     private Vector3 characterScale = new Vector3(5, 5, 5);
     private Vector3 respawnPoint;
->>>>>>> main:SnakeAndLadders/Assets/Scripts/Player/PlayerMovement.cs
     private Animator anim;
     private float speed = 8;
     private float climbingSpeed = 4;

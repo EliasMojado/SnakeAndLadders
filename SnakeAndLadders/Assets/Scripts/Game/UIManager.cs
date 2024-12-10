@@ -28,7 +28,9 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private TMP_InputField addressField;
 
-    [SerializeField] private TMP_InputField portField;
+    //[SerializeField] private TMP_InputField portField;
+
+    private ushort port = 7777;
 
     private void Awake()
     { 
@@ -41,12 +43,6 @@ public class UIManager : MonoBehaviour
         if (!IsValidIPAddress(ipAddress))
         {
             Debug.LogError("Invalid IP address.");
-            return;
-        }
-
-        if (!ushort.TryParse(portField.text, out ushort port))
-        {
-            Debug.LogError("Invalid port number.");
             return;
         }
 

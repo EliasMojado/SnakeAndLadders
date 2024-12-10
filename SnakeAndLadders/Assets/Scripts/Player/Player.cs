@@ -141,18 +141,12 @@ public class Player : MonoBehaviour
 
         if (list.TryGetValue(playerId, out Player player))
         {
-<<<<<<< HEAD:SnakeAndLadders/Assets/Scripts/Player.cs
-            if(player.isLocal){
-                return;
-            }
-=======
 
             if (player.isLocal)
             {
                 return;
             }
             
->>>>>>> main:SnakeAndLadders/Assets/Scripts/Player/Player.cs
             // Update the player's position
             player.Move(position);
 

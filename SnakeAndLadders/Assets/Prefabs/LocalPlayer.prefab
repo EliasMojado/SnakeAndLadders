@@ -161,8 +161,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
-<<<<<<< HEAD
-=======
 --- !u!114 &4374792459713322510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,7 +179,6 @@ MonoBehaviour:
   bgMusicClipLevel1: {fileID: 8300000, guid: 826e852ea950741e69379b7199b1935b, type: 3}
   bgMusicClipLevel3: {fileID: 8300000, guid: 99861f6f37fe74c77af0271112000962, type: 3}
   bgMusicClipLevel5: {fileID: 8300000, guid: 8875a7a51597a48c39960c4e4260bb69, type: 3}
->>>>>>> main
 --- !u!95 &3661846923862052802
 Animator:
   serializedVersion: 5
