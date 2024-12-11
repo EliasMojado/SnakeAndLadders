@@ -9,11 +9,18 @@ public class CameraController : MonoBehaviour
     private bool followPlayer = true; // Flag to control whether the camera follows the player
     public float panSpeed = 1f; // Speed of the camera pan
 
+    private AudioSource audioSource;  // Reference to the AudioSource component
+    public AudioClip winClip;         // Reference to the win audio clip
+
     private void Start()
     {
         // Save the initial X and Y positions of the camera
         initialX = transform.position.x;
         initialY = transform.position.y;
+
+        // Get the AudioSource component attached to the Camera
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.clip = winClip;
     }
 
     private void LateUpdate()
@@ -50,13 +57,18 @@ public class CameraController : MonoBehaviour
     {
         // Stop the camera from following the player
         StopFollowingPlayer();
+        StopAllOtherAudio();
 
-        // Start a coroutine to smoothly pan the camera
+        // Start the camera pan and play audio simultaneously
         StartCoroutine(SmoothCameraPan(cheesePosition));
     }
 
+    // Coroutine to smoothly pan the camera and play the win audio while panning
     public IEnumerator SmoothCameraPan(Vector3 targetPosition)
     {
+        // Play the win audio as soon as the panning starts
+        PlayWinAudio();
+
         // Keep the current X position to avoid horizontal movement
         float startX = transform.position.x;
         float startY = transform.position.y;
@@ -75,5 +87,38 @@ public class CameraController : MonoBehaviour
 
         // Ensure the camera reaches the target position
         transform.position = new Vector3(startX, targetY, -10f);
+
+        // Stop the audio after the pan is complete
+    }
+
+    private void PlayWinAudio()
+    {
+        if (audioSource != null && winClip != null)
+        {
+            audioSource.clip = winClip;
+            audioSource.Play();  // Play the audio
+        }
+    }
+
+    private void stopWinAudio()
+    {
+        if (audioSource != null)
+        {
+            audioSource.Stop();  // Stop the audio after the pan is complete
+        }
+    }
+    
+    private void StopAllOtherAudio()
+    {
+        AudioSource[] allAudioSources = FindObjectsOfType<AudioSource>();
+
+        // Stop all audio sources except for the one attached to the camera
+        foreach (AudioSource otherSource in allAudioSources)
+        {
+            if (otherSource != audioSource)
+            {
+                otherSource.Stop();
+            }
+        }
     }
 }

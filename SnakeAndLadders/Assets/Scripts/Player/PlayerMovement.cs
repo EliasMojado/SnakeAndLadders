@@ -1,9 +1,7 @@
 using Riptide;
 // using Unity.VisualScripting.Dependencies.Sqlite;
-
 using System.Collections;
 using UnityEngine;
-using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -25,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     private AudioSource jumpAudioSource;
     private AudioSource climbingAudioSource;
     private AudioSource bgMusicAudioSource;
+    private AudioSource snakeAudioSource;
 
     public AudioClip footstepClip;
     public AudioClip jumpClip1; // jump music for level 1
@@ -36,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip bgMusicClip1; // bg music for levels 1 & 2; default
     public AudioClip bgMusicClip3; // bg music for levels 3 & 4
     public AudioClip bgMusicClip5; // bg music for level 5/final level
+    public AudioClip snakeClip;
 
     private float level2YThreshold = 7f;
     private float level3YThreshold = 19f;
@@ -72,6 +72,10 @@ public class PlayerMovement : MonoBehaviour
         climbingAudioSource.loop = true;
 
         bgMusicAudioSource = gameObject.AddComponent<AudioSource>();
+
+        snakeAudioSource = gameObject.AddComponent<AudioSource>();
+        snakeAudioSource.clip = snakeClip;
+        snakeAudioSource.playOnAwake = false;
     }
 
     private void Update()
@@ -89,8 +93,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (currentY >= level3YThreshold && lastY < level3YThreshold)
         {
-            StartCoroutine(FadeMusic(bgMusicClip3
-));
+            StartCoroutine(FadeMusic(bgMusicClip3));
         }
         else if (currentY < level3YThreshold && lastY >= level3YThreshold)
         {
@@ -98,8 +101,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (currentY < level5YThreshold && lastY >= level5YThreshold)
         {
-            StartCoroutine(FadeMusic(bgMusicClip3
-));
+            StartCoroutine(FadeMusic(bgMusicClip3));
         }
 
         lastY = currentY;
@@ -332,6 +334,7 @@ public class PlayerMovement : MonoBehaviour
             isClimbing = true;
         }else if (other.CompareTag("Snake")){
             Debug.Log("Snake Collision!");
+            snakeAudioSource.Play();
             Respawn();
         }else if (other.CompareTag("Void")){
             Debug.Log("You fell into the void!");

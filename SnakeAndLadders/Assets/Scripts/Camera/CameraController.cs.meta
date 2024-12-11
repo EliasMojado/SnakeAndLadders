@@ -3,7 +3,9 @@ guid: c35eed227eba8a444b81a182ebc6c77c
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - player: {instanceID: 0}
+  - winClip: {fileID: 8300000, guid: 3336856e2487a4d47b003153e18e50cc, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

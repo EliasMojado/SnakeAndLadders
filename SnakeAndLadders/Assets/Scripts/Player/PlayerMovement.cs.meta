@@ -5,15 +5,16 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - footstepClip: {fileID: 8300000, guid: 953bbab4fc6d74abeb66d6ce987abd3a, type: 3}
-  - jumpClip1: {fileID: 8300000, guid: bc3e3226ca7c340bc9e76bfe6965205b, type: 3}
+  - jumpClip1: {fileID: 8300000, guid: 55eac8c2e28d845e1a238d1d900717a3, type: 3}
   - jumpClip2: {fileID: 8300000, guid: 5d3992a23bc4b4a76a79d5b78a9ce7ef, type: 3}
-  - jumpClip3: {fileID: 8300000, guid: 55eac8c2e28d845e1a238d1d900717a3, type: 3}
-  - jumpClip4: {fileID: 8300000, guid: d96a4a208ce8f4acdb859ae47efbf30e, type: 3}
+  - jumpClip3: {fileID: 8300000, guid: d96a4a208ce8f4acdb859ae47efbf30e, type: 3}
+  - jumpClip4: {fileID: 8300000, guid: 3391a4d782be74a74a0fcf80c01f7c2c, type: 3}
   - jumpClip5: {fileID: 8300000, guid: cacd2894c82ea4bbc8de371002d17e98, type: 3}
   - climbingClip: {fileID: 8300000, guid: ecd852916701c4520b83e6df1bf766f7, type: 3}
   - bgMusicClip1: {fileID: 8300000, guid: 826e852ea950741e69379b7199b1935b, type: 3}
   - bgMusicClip3: {fileID: 8300000, guid: 99861f6f37fe74c77af0271112000962, type: 3}
   - bgMusicClip5: {fileID: 8300000, guid: 8875a7a51597a48c39960c4e4260bb69, type: 3}
+  - snakeClip: {fileID: 8300000, guid: be1c08e9d2ad24b209dbb70e8a8eb0ee, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
