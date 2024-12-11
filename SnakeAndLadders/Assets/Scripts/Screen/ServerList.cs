@@ -40,7 +40,8 @@ public class ServerList : MonoBehaviour
     ushort broadcastPortReceive = 7800;
     ushort broadcastPortSend = 7801;
     ushort localPort = 7777;
-    bool runUpdate = false;
+    public string username = "Player No Name";
+    TMP_InputField inputField;
 
     private float updateInterval = 3.0f; // 1 second interval
     private float nextUpdateTime = 0f;
@@ -87,6 +88,13 @@ public class ServerList : MonoBehaviour
         Button connectOnlineButton = canvasTransform.GetChild(1).GetComponent<Button>();
         // Assign the ConnectOnline method to the button's onClick listener
         connectOnlineButton.onClick.AddListener(ConnectOnline);
+        
+    }
+
+    public string GetUsername()
+    {
+        inputField = list.Find("Panel").GetChild(0).GetComponent<TMP_InputField>();
+        return inputField.text;
     }
 
     public void ConnectOnline()

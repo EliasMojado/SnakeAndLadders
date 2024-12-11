@@ -27,7 +27,7 @@ public class UIManager : MonoBehaviour
     [Header("Connect")]
     [SerializeField] private GameObject welcomePanel;
     [SerializeField] private Button startButton;
-
+    [SerializeField] private TMP_InputField usernameField;
     //[SerializeField] private TMP_InputField portField;
 
     private ushort port = 7777;
@@ -87,8 +87,9 @@ public class UIManager : MonoBehaviour
     public void SendName()
     {
         Message message = Message.Create(MessageSendMode.Reliable, ClientToServerId.name);
-        //message.AddString(usernameField.text);
-        message.AddString("usernamezzzz");
+        string username = ServerList.Singleton.GetUsername();
+        message.AddString(username);
+        Debug.Log("Sending name: " + username);
         NetworkManager.Singleton.Client.Send(message);
     }
 
