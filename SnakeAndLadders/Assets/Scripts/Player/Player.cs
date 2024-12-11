@@ -1,6 +1,7 @@
 using Riptide;
 using Riptide.Transports;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -72,6 +73,18 @@ public class Player : MonoBehaviour
         player.name = $"Player {id} ({(string.IsNullOrEmpty(username) ? "Guest" : username)})";
         player.id = id;
         player.username = username;
+
+        Transform canvasTransform = player.transform.GetChild(0); // Assuming Canvas is the first child
+        Transform usernameTransform = canvasTransform.GetChild(0); // Assuming the TextMeshProUGUI is the first child of Canvas
+        TextMeshProUGUI textComponent = usernameTransform.GetComponent<TextMeshProUGUI>();
+        if (textComponent != null)
+        {
+            textComponent.text = username;
+        }
+        else
+        {
+            Debug.LogError("TextMeshProUGUI component not found on the 'username' object.");
+        }
 
         list.Add(id, player);
     }
@@ -180,4 +193,17 @@ public class Player : MonoBehaviour
             player.UpdateState(state);
         }
     }
+
+    [MessageHandler((ushort)ServerToClientId.cheeseCaptured)]
+    private static void OnCheeseCaptured(Message message)
+    {
+        ushort playerId = message.GetUShort(); // Player ID who captured the cheese
+        Vector3 cheesePosition = message.GetVector3(); // Position of the cheese captured
+
+        Debug.Log($"Cheese captured by Player {playerId} at {cheesePosition}");
+
+        // Update the game state (e.g., remove cheese, update score, etc.)
+        GameLogic.Singleton.HandleCheeseCaptured(playerId, cheesePosition);
+    }
+
 }

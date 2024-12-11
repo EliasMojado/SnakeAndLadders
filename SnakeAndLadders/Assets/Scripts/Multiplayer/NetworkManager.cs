@@ -8,13 +8,17 @@ public enum ServerToClientId : ushort
     playerSpawned = 1,
     playerMovement,
     snakeSpawned,
-    snakeUpdated 
+    snakeUpdated,
+    handshake,
+    cheeseCaptured
 }
 
 public enum ClientToServerId : ushort
 {
     name = 1,
     input,
+    handshake,
+    cheeseCaptured
 }
 
 public class NetworkManager : MonoBehaviour
@@ -38,9 +42,6 @@ public class NetworkManager : MonoBehaviour
     }
 
     public Client Client { get; private set; }
-
-    [SerializeField] private string ip;
-    [SerializeField] private ushort port;
 
     private void Awake()
     {
@@ -77,12 +78,16 @@ public class NetworkManager : MonoBehaviour
 
     public void DidConnect(object sender, EventArgs e)
     {
+        Debug.Log("Connected to server");
+        ServerList.Singleton.getServerListInstance.SetActive(false);
         UIManager.Singleton.SendName();
+        BackToLoby.Singleton.backToLobbyButton.gameObject.SetActive(true);
     }
 
     private void FailedToConnect(object sender, EventArgs e)
     {
-        UIManager.Singleton.BackToMain();
+        Debug.Log("Failed to connect to server");
+        //UIManager.Singleton.BackToMain();
     }
 
     private void DidDisconnect(object sender, EventArgs e)

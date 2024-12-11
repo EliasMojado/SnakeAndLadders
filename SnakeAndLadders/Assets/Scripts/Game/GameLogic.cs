@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class GameLogic : MonoBehaviour
 {
@@ -29,8 +30,20 @@ public class GameLogic : MonoBehaviour
     [SerializeField] public GameObject playerPrefab;
     [SerializeField] public GameObject snakePrefab;
 
+    [Header("Camera")]
+    [SerializeField] private Camera mainCamera;
+    private float panSpeed = 5f;
+
     private void Awake()
     {
         Singleton = this;
+    }
+
+    public void HandleCheeseCaptured(ushort playerId, Vector3 cheesePosition)
+    {
+        Debug.Log($"Handled cheese capture for Player {playerId}.");
+
+        mainCamera.GetComponent<CameraController>().StopFollowingPlayer();
+        mainCamera.GetComponent<CameraController>().PanCameraToCheese(cheesePosition);
     }
 }
