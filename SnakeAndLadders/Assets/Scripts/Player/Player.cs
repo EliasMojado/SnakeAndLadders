@@ -16,11 +16,14 @@ public class Player : MonoBehaviour
     public string username;
 
     private Vector3 targetPosition;
+    private Vector3 previousPosition;
+
     private float interpolationSpeed = 30f;
 
     private void Start()
     {
         targetPosition = transform.position;
+        previousPosition = transform.position;
     }
 
     private void Update()
@@ -128,15 +131,38 @@ public class Player : MonoBehaviour
         }
     }
 
-    // di mogana idk why
+    private float positionUpdateDelay = 0.5f; // Delay in seconds
+    private float positionUpdateTimer = 0f;   // Timer to track delay
+
     private void FlipSprite()
     {
-        // Check the player's velocity in the X direction to determine the movement direction
-        // if (spriteRenderer != null)
-        // {
-        //     Debug.Log("velocity: " + body.velocity.x);
-        //     spriteRenderer.flipX = body.velocity.x < 0;
-        // }
+        if (!isLocal) // Only update for non-local players
+        {
+            Vector3 direction = transform.position - previousPosition; // Calculate movement direction
+            
+            Debug.Log($"Current Position: {transform.position}, Previous Position: {previousPosition}, Direction: {direction}");
+            
+            if (direction.x > 0) // Moving right
+            {
+                spriteRenderer.flipX = true;
+                Debug.Log("Moving Right: spriteRenderer.flipX = false");
+            }
+            else if (direction.x < 0) // Moving left
+            {
+                spriteRenderer.flipX = false;
+                Debug.Log("Moving Left: spriteRenderer.flipX = true");
+            }
+
+            // Increment the timer
+            positionUpdateTimer += Time.deltaTime;
+
+            // Update previous position only after the delay
+            if (positionUpdateTimer >= positionUpdateDelay)
+            {
+                previousPosition = transform.position;
+                positionUpdateTimer = 0f; // Reset the timer
+            }
+        }
     }
 
     [MessageHandler((ushort)ServerToClientId.playerSpawned)]
