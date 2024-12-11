@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 8456014669833921138}
   - component: {fileID: 1771103528009110403}
   - component: {fileID: 6659203686374385013}
-  - component: {fileID: 4374792459713322510}
   - component: {fileID: 3661846923862052802}
-  - component: {fileID: 3569885989254464821}
-  - component: {fileID: 1375370907559723934}
-  m_Layer: 6
+  - component: {fileID: 1755355930084853077}
+  - component: {fileID: -8846959412265919913}
+  - component: {fileID: 4374792459713322510}
+  m_Layer: 7
   m_Name: LocalPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,8 +32,8 @@ Transform:
   m_GameObject: {fileID: 5073711473687060460}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.435, y: 0.811, z: 0}
-  m_LocalScale: {x: 5.1310005, y: 5, z: 5}
+  m_LocalPosition: {x: 0.723, y: 0.771, z: 0}
+  m_LocalScale: {x: 2.3, y: 2.3, z: 2.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -78,10 +78,10 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -3286189400204805870, guid: bacb39275657a5c41b462455d80cd045, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: -1274453311, guid: 1c81d06025d28369797054110417ad1e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
@@ -122,18 +122,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.012893505, y: -0.119121045}
+  m_Offset: {x: 0.004402332, y: -0.010052219}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.64, y: 0.64}
+    oldSize: {x: 0.32, y: 0.32}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.1338595, y: 0.08540293}
+  m_Size: {x: 0.19298626, y: 0.20395103}
   m_EdgeRadius: 0
 --- !u!50 &6659203686374385013
 Rigidbody2D:
@@ -162,28 +162,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &4374792459713322510
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5073711473687060460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 237fad52b0ec9de47b16b22f04ad1cbf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  footstepClip: {fileID: 8300000, guid: 953bbab4fc6d74abeb66d6ce987abd3a, type: 3}
-  jumpClip1: {fileID: 8300000, guid: bc3e3226ca7c340bc9e76bfe6965205b, type: 3}
-  jumpClip2: {fileID: 8300000, guid: b042cdb1d82d3458e948042a0fc1de30, type: 3}
-  jumpClip3: {fileID: 8300000, guid: 55eac8c2e28d845e1a238d1d900717a3, type: 3}
-  jumpClip4: {fileID: 8300000, guid: d96a4a208ce8f4acdb859ae47efbf30e, type: 3}
-  jumpClip5: {fileID: 8300000, guid: 8875a7a51597a48c39960c4e4260bb69, type: 3}
-  climbingClip: {fileID: 8300000, guid: ecd852916701c4520b83e6df1bf766f7, type: 3}
-  bgMusicClip1: {fileID: 8300000, guid: 826e852ea950741e69379b7199b1935b, type: 3}
-  bgMusicClip3: {fileID: 8300000, guid: 99861f6f37fe74c77af0271112000962, type: 3}
-  bgMusicClip5: {fileID: 8300000, guid: 8875a7a51597a48c39960c4e4260bb69, type: 3}
 --- !u!95 &3661846923862052802
 Animator:
   serializedVersion: 5
@@ -205,7 +183,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3569885989254464821
+--- !u!114 &1755355930084853077
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -218,7 +196,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   username: 
---- !u!114 &1375370907559723934
+--- !u!114 &-8846959412265919913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5073711473687060460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 237fad52b0ec9de47b16b22f04ad1cbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footstepClip: {fileID: 8300000, guid: 953bbab4fc6d74abeb66d6ce987abd3a, type: 3}
+  jumpClip: {fileID: 8300000, guid: b042cdb1d82d3458e948042a0fc1de30, type: 3}
+  climbingClip: {fileID: 8300000, guid: ecd852916701c4520b83e6df1bf766f7, type: 3}
+  bgMusicClipLevel1: {fileID: 8300000, guid: 826e852ea950741e69379b7199b1935b, type: 3}
+  bgMusicClipLevel3: {fileID: 8300000, guid: 99861f6f37fe74c77af0271112000962, type: 3}
+  bgMusicClipLevel5: {fileID: 8300000, guid: 8875a7a51597a48c39960c4e4260bb69, type: 3}
+--- !u!114 &4374792459713322510
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
