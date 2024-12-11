@@ -27,13 +27,19 @@ public class PlayerMovement : MonoBehaviour
     private AudioSource bgMusicAudioSource;
 
     public AudioClip footstepClip;
-    public AudioClip jumpClip;
+    public AudioClip jumpClip1; // jump music for level 1
+    public AudioClip jumpClip2; // jump music for level 2
+    public AudioClip jumpClip3; // jump music for level 3
+    public AudioClip jumpClip4; // jump music for level 4
+    public AudioClip jumpClip5; // jump music for level 5
     public AudioClip climbingClip;
-    public AudioClip bgMusicClipLevel1;
-    public AudioClip bgMusicClipLevel3;
-    public AudioClip bgMusicClipLevel5;
+    public AudioClip bgMusicClip1; // bg music for levels 1 & 2; default
+    public AudioClip bgMusicClip3; // bg music for levels 3 & 4
+    public AudioClip bgMusicClip5; // bg music for level 5/final level
 
+    private float level2YThreshold = 7f;
     private float level3YThreshold = 19f;
+    private float level4YThreshold = 29f;
     private float level5YThreshold = 41f;
     private float lastY = 0f;
 
@@ -44,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
         inputs = new bool[5];
         currentState = Constants.PlayerState.Idle;
 
-        setBackgroundMusic(bgMusicClipLevel1);
+        setBackgroundMusic(bgMusicClip1);
     }
 
     private void Awake()
@@ -60,7 +66,6 @@ public class PlayerMovement : MonoBehaviour
         footstepAudioSource.loop = true;
 
         jumpAudioSource = gameObject.AddComponent<AudioSource>();
-        jumpAudioSource.clip = jumpClip;
 
         climbingAudioSource = gameObject.AddComponent<AudioSource>();
         climbingAudioSource.clip = climbingClip;
@@ -80,19 +85,21 @@ public class PlayerMovement : MonoBehaviour
         // check if player has moved to a new level
         if (currentY >= level5YThreshold && lastY < level5YThreshold)
         {
-            StartCoroutine(FadeMusic(bgMusicClipLevel5));
+            StartCoroutine(FadeMusic(bgMusicClip5));
         }
         else if (currentY >= level3YThreshold && lastY < level3YThreshold)
         {
-            StartCoroutine(FadeMusic(bgMusicClipLevel3));
+            StartCoroutine(FadeMusic(bgMusicClip3
+));
         }
         else if (currentY < level3YThreshold && lastY >= level3YThreshold)
         {
-            StartCoroutine(FadeMusic(bgMusicClipLevel1));
+            StartCoroutine(FadeMusic(bgMusicClip1));
         }
         else if (currentY < level5YThreshold && lastY >= level5YThreshold)
         {
-            StartCoroutine(FadeMusic(bgMusicClipLevel3));
+            StartCoroutine(FadeMusic(bgMusicClip3
+));
         }
 
         lastY = currentY;
@@ -187,6 +194,26 @@ public class PlayerMovement : MonoBehaviour
     #endregion
     private void Jump()
     {
+        if (transform.position.y >= level5YThreshold)
+        {
+            jumpAudioSource.clip = jumpClip5; // rooftop
+        }
+        else if (transform.position.y >= level4YThreshold)
+        {
+            jumpAudioSource.clip = jumpClip4; // vent
+        }
+        else if (transform.position.y >= level3YThreshold)
+        {
+            jumpAudioSource.clip = jumpClip3; // street
+        }
+        else if (transform.position.y >= level2YThreshold)
+        {
+            jumpAudioSource.clip = jumpClip2; // sewer
+        }
+        else
+        {
+            jumpAudioSource.clip = jumpClip1; // underground
+        }
         body.velocity = new Vector2(body.velocity.x, speed * 1.2f);
         anim.SetTrigger("jump");
         grounded = false;
@@ -232,7 +259,7 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
 
-        if (newClip == bgMusicClipLevel3)
+        if (newClip == bgMusicClip3)
         {
             bgMusicAudioSource.volume = 0.3f;
         }
