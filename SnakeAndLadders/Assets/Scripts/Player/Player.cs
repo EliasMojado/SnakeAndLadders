@@ -193,4 +193,17 @@ public class Player : MonoBehaviour
             player.UpdateState(state);
         }
     }
+
+    [MessageHandler((ushort)ServerToClientId.cheeseCaptured)]
+    private static void OnCheeseCaptured(Message message)
+    {
+        ushort playerId = message.GetUShort(); // Player ID who captured the cheese
+        Vector3 cheesePosition = message.GetVector3(); // Position of the cheese captured
+
+        Debug.Log($"Cheese captured by Player {playerId} at {cheesePosition}");
+
+        // Update the game state (e.g., remove cheese, update score, etc.)
+        GameLogic.Singleton.HandleCheeseCaptured(playerId, cheesePosition);
+    }
+
 }

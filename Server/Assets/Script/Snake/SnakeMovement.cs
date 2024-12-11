@@ -3,7 +3,7 @@ using UnityEngine;
 public class SnakeMovement : MonoBehaviour
 {
     private float followDistance = 5f; // Distance within which the snake follows the player
-    public float speed = 5f;           // Movement speed of the snake
+    public float speed = 4f;           // Movement speed of the snake
     public float jumpForce = 10f;       // Force applied for jumping
     public float groundCheckDistance = 0.5f; // Distance to check if the snake is grounded
 
@@ -153,8 +153,11 @@ public class SnakeMovement : MonoBehaviour
             return;
         }
 
-        // Move towards the player's position (horizontal movement)
-        rb.velocity = new Vector2(direction.x * speed, rb.velocity.y);
+        if(direction.x > 0){
+            rb.velocity = new Vector2(speed, rb.velocity.y);
+        }else{
+            rb.velocity = new Vector2(-speed, rb.velocity.y);
+        }
 
         // Trigger jump if player is above the snake and horizontally aligned
         if (Mathf.Abs(targetPlayer.position.x - transform.position.x) < 1f && targetPlayer.position.y > transform.position.y + 0.5f)

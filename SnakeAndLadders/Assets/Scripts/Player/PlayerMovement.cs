@@ -312,6 +312,9 @@ public class PlayerMovement : MonoBehaviour
         }else if (other.CompareTag("Respawn")){
             Debug.Log("Respawn Point Set!");
             respawnPoint = other.transform.position;
+        }else if (other.CompareTag("cheese")){
+            Debug.Log("Cheese Collected!");
+            CaptureCheese(other.transform.position);
         }
     }
 
@@ -324,4 +327,16 @@ public class PlayerMovement : MonoBehaviour
             isClimbing = false;
         }
     }
+
+    public void CaptureCheese(Vector3 cheesePosition)
+    {
+        Message message = Message.Create(MessageSendMode.Reliable, (ushort)ClientToServerId.cheeseCaptured);
+        message.AddUShort(1); // Send the player's ID
+        message.AddVector3(cheesePosition); // Send the cheese position
+
+        NetworkManager.Singleton.Client.Send(message);
+
+        Debug.Log("Cheese captured event sent to the server.");
+    }
+
 }
