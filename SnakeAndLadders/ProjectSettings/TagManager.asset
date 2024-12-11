@@ -8,6 +8,7 @@ TagManager:
   - Ladder
   - Snake
   - Void
+  - cheese
   layers:
   - Default
   - TransparentFX

@@ -17,6 +17,7 @@ public enum ServerToClientId : ushort
     snakeSpawned,
     snakeUpdated,
     handshake,
+    cheeseCaptured
 }
 
 public enum ClientToServerId : ushort
@@ -24,6 +25,7 @@ public enum ClientToServerId : ushort
     name = 1,
     input,
     handshake,
+    cheeseCaptured
 }
 
 public class NetworkManager : MonoBehaviour
@@ -140,6 +142,23 @@ public class NetworkManager : MonoBehaviour
     {
         string name = message.GetString();
         Debug.LogWarning($"[NetworkManager] Received handshake from {clientId}: {name}");
+    }
+
+    [MessageHandler((ushort)ClientToServerId.cheeseCaptured)]
+    private static void HandleCheeseCaptured(ushort clientId, Message message)
+    {
+        // Read the data sent by the player
+        ushort playerId = message.GetUShort(); // Player ID who captured the cheese
+        Vector3 cheesePosition = message.GetVector3(); // Position of the cheese captured
+
+        Debug.Log($"Player {playerId} captured cheese at {cheesePosition}");
+
+        // Notify all players about the cheese capture
+        Message broadcastMessage = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.cheeseCaptured);
+        broadcastMessage.AddUShort(playerId);
+        broadcastMessage.AddVector3(cheesePosition);
+
+        NetworkManager.Singleton.Server.SendToAll(broadcastMessage);
     }
 
 }

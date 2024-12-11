@@ -10,6 +10,7 @@ public enum ServerToClientId : ushort
     snakeSpawned,
     snakeUpdated,
     handshake,
+    cheeseCaptured
 }
 
 public enum ClientToServerId : ushort
@@ -17,6 +18,7 @@ public enum ClientToServerId : ushort
     name = 1,
     input,
     handshake,
+    cheeseCaptured
 }
 
 public class NetworkManager : MonoBehaviour
