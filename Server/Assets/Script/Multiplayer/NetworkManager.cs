@@ -53,7 +53,7 @@ public class NetworkManager : MonoBehaviour
     public Server Server { get; private set; }
 
     [SerializeField] private ushort port;
-    [SerializeField] private ushort maxClientCount;
+    [SerializeField] private ushort maxClientCount = 100;
 
     private void Awake()
     {
@@ -107,7 +107,7 @@ public class NetworkManager : MonoBehaviour
         var ip = GetLocalIPAddress();
         Debug.Log("SendBroadcast");
         int connectedClients = Player.list.Count;
-        string message = $"{ip}:{port}, Server{port}, {connectedClients}/{maxClientCount}";
+        string message = $"{ip}:{port}, {ip}, {connectedClients}/{maxClientCount}";
         byte[] data = Encoding.UTF8.GetBytes(message);
         Debug.Log(IPAddress.Broadcast);
         IPEndPoint endPoint = new IPEndPoint(IPAddress.Broadcast, BroadcastPortSend);
