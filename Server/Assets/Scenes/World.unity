@@ -7346,7 +7346,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   port: 7777
-  maxClientCount: 5
+  maxClientCount: 100
 --- !u!1 &1319635540
 GameObject:
   m_ObjectHideFlags: 0

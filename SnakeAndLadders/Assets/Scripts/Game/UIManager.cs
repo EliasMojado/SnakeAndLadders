@@ -1,6 +1,8 @@
 using Riptide;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -23,33 +25,45 @@ public class UIManager : MonoBehaviour
     }
 
     [Header("Connect")]
-    [SerializeField] private GameObject connectPanel;
-    [SerializeField] private TMP_InputField usernameField;
-
-    [SerializeField] private TMP_InputField addressField;
+    [SerializeField] private GameObject welcomePanel;
+    [SerializeField] private Button startButton;
 
     //[SerializeField] private TMP_InputField portField;
 
     private ushort port = 7777;
 
     private void Awake()
-    { 
+    {
         Singleton = this;
+    }
+
+    private void Start()
+    {
+        startButton.onClick.AddListener(goToMultiplayerScreen);
+    }
+
+    public void goToMultiplayerScreen()
+    {
+        Debug.Log("goToMultiplayerScreen");
+        welcomePanel.SetActive(false);
+        ServerList.Singleton.LoadScreen();
+        Task.Run(() => ServerList.Singleton.ListenForBroadcasts());
     }
 
     public void ConnectClicked()
     {
-        string ipAddress = addressField.text;
-        if (!IsValidIPAddress(ipAddress))
-        {
-            Debug.LogError("Invalid IP address.");
-            return;
-        }
+        Debug.Log("ConnectClicked");
+        //string ipAddress = addressField.text;
+        //if (!IsValidIPAddress(ipAddress))
+        //{
+        //    Debug.LogError("Invalid IP address.");
+        //    return;
+        //}
 
-        usernameField.interactable = false;
-        connectPanel.SetActive(false);
+        //usernameField.interactable = false;
+        //connectPanel.SetActive(false);
 
-        NetworkManager.Singleton.Connect(ipAddress, port);
+        //NetworkManager.Singleton.Connect(ipAddress, port);
     }
 
     public void DisconnectClicked() {
@@ -58,8 +72,6 @@ public class UIManager : MonoBehaviour
 
     public void BackToMain()
     {
-        usernameField.interactable = true;
-        connectPanel.SetActive(true);
 
         foreach (Player player in Player.list.Values)
         {
@@ -75,7 +87,8 @@ public class UIManager : MonoBehaviour
     public void SendName()
     {
         Message message = Message.Create(MessageSendMode.Reliable, ClientToServerId.name);
-        message.AddString(usernameField.text);
+        //message.AddString(usernameField.text);
+        message.AddString("usernamezzzz");
         NetworkManager.Singleton.Client.Send(message);
     }
 

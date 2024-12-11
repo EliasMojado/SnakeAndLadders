@@ -1,6 +1,7 @@
 using Riptide;
 using Riptide.Transports;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -69,6 +70,18 @@ public class Player : MonoBehaviour
         player.name = $"Player {id} ({(string.IsNullOrEmpty(username) ? "Guest" : username)})";
         player.id = id;
         player.username = username;
+
+        Transform canvasTransform = player.transform.GetChild(0); // Assuming Canvas is the first child
+        Transform usernameTransform = canvasTransform.GetChild(0); // Assuming the TextMeshProUGUI is the first child of Canvas
+        TextMeshProUGUI textComponent = usernameTransform.GetComponent<TextMeshProUGUI>();
+        if (textComponent != null)
+        {
+            textComponent.text = username;
+        }
+        else
+        {
+            Debug.LogError("TextMeshProUGUI component not found on the 'username' object.");
+        }
 
         list.Add(id, player);
     }
